@@ -1,0 +1,13 @@
+{
+    "name": "keita_tabuchi/text-snippet-sharing-service",
+    "autoload": {
+        "psr-4": {
+            "Commands\\": "Commands/",
+            "Programs\\": "Commands/Programs/",
+            "Database\\": "Database/",
+            "Helpers\\": "Helpers/",
+            "Response\\": "Response/",
+            "Render\\": "Response/Render"
+        }
+    }
+}
