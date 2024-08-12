@@ -23,7 +23,7 @@ return [
         $imageData = file_get_contents($image['tmp_name']);
         $res = DatabaseHelper::postImage($uid, $title, $imageData);
 
-        return new JSONRenderer(['res' => $res]);
+        return new JSONRenderer(['imageId' => $res]);
     },
 
 ];

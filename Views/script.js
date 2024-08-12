@@ -32,7 +32,38 @@ document.getElementById('uploadButton').addEventListener('click', function() {
     })
     .then(response => response.json())
     .then(data => {
-        alert('Image uploaded successfully!');
+        if (data.imageId) {
+            alert('Image uploaded successfully!');
+            
+            // 画像のタイプ（拡張子）を取得
+            const fileType = file.name.split('.').pop();
+            // 2つのURLを生成
+            const viewUrl = `http://localhost:5500/Views/index.html/${fileType}/${uid}`;
+            const deleteUrl = `http://localhost:5500/Views/index.html/${fileType}/${uid}/delete`;
+
+            // URLを表示するための要素を作成
+            const linkContainer = document.createElement('div');
+            linkContainer.className = 'link-container'; // クラスを追加
+
+            const viewLink = document.createElement('a');
+            viewLink.href = viewUrl;
+            viewLink.textContent = 'View Image';
+            viewLink.target = '_blank';
+
+            const deleteLink = document.createElement('a');
+            deleteLink.href = deleteUrl;
+            deleteLink.textContent = 'Delete Image';
+            deleteLink.target = '_blank';
+
+            // URLを画面に追加
+            linkContainer.appendChild(viewLink);
+            linkContainer.appendChild(document.createElement('br')); // 改行
+            linkContainer.appendChild(deleteLink);
+            const leftPanel = document.querySelector('.left-panel');
+            leftPanel.appendChild(linkContainer);
+        } else {
+            alert('Image upload failed!');
+        }
     })
     .catch(error => {
         console.error('Error uploading image:', error);

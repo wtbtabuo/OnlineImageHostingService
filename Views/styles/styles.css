@@ -57,3 +57,22 @@ header, footer {
     height: auto;
     display: none;
 }
+
+.link-container {
+    margin-top: 20px; /* スペースを追加 */
+    padding: 10px; /* 内側のスペースを追加 */
+    background-color: #3b4b61; /* 背景色を濃くして見やすくする */
+    border-radius: 5px; /* 角を丸める */
+}
+
+.link-container a {
+    display: block;
+    margin-bottom: 5px;
+    color: #2980b9; /* リンクの色 */
+    text-decoration: none; /* 下線を除去 */
+    font-weight: bold; /* 太字にして強調 */
+}
+
+.link-container a:hover {
+    text-decoration: underline; /* ホバー時に下線を追加 */
+}
