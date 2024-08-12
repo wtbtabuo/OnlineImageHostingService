@@ -13,6 +13,7 @@ document.getElementById('imageInput').addEventListener('change', function(event)
 document.getElementById('uploadButton').addEventListener('click', function() {
     const fileInput = document.getElementById('imageInput');
     const titleInput = document.getElementById('titleInput').value;
+    const uid = uuid.v4();
 
     if (fileInput.files.length === 0 || titleInput.trim() === "") {
         alert("Please select an image and enter a title.");
@@ -23,6 +24,7 @@ document.getElementById('uploadButton').addEventListener('click', function() {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('title', titleInput);
+    formData.append('uid', uid);
 
     fetch('http://127.0.0.1:8000/api/image', {
         method: 'POST',

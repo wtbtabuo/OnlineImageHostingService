@@ -8,25 +8,22 @@ use Response\Render\JSONRenderer;
 
 return [
     'api/image'=>function(){
-        $inputData = json_decode(file_get_contents('php://input'), true);
-        $uid = ValidationHelper::string($inputData['uid']??null);
-        $text = ValidationHelper::string($inputData['text']??null);
-        $language = ValidationHelper::string($inputData['language']??null);
-        $retention = $inputData['retention'];
-        $title = ValidationHelper::string($inputData['title']??null);
-        $textSnippet = DatabaseHelper::postTextSnippet($uid, $text, $language, $retention, $title);
-        return new JSONRenderer(['textSnippet'=>$textSnippet]);
+        $uid = ValidationHelper::string($_POST['uid'] ?? null);
+        $title = ValidationHelper::string($_POST['title'] ?? null);
+        $image = $_FILES['image'] ?? null;
+        if (!$uid) {
+            return new JSONRenderer(['error' => 'UID is required'], 400);
+        }
+        if (!$title) {
+            return new JSONRenderer(['error' => 'Title is required'], 400);
+        }
+        if (!$image || $image['error'] !== UPLOAD_ERR_OK) {
+            return new JSONRenderer(['error' => 'Image is required and must be successfully uploaded'], 400);
+        }
+        $imageData = file_get_contents($image['tmp_name']);
+        $res = DatabaseHelper::postImage($uid, $title, $imageData);
+
+        return new JSONRenderer(['res' => $res]);
     },
 
-    'api/textSnippet/text' => function() {
-        $uid = ValidationHelper::string($_GET['uid'] ?? null);
-
-        $textSnippet = DatabaseHelper::getTextSnippetByUid($uid);
-        if ($textSnippet) {
-            return new JSONRenderer(['textSnippet' => $textSnippet]);
-        } else {
-            // データが見つからなかった場合の処理
-            return new JSONRenderer(['error' => 'Text snippet not found'], 404);
-        }
-    }
 ];
