@@ -11,10 +11,11 @@ class DatabaseHelper
         $db = new MySQLWrapper();
 
         // データベースにインサートするSQL文
-        $stmt = $db->prepare("INSERT INTO images (uid, title, image) VALUES (?, ?, ?)");
+        $stmt = $db->prepare("INSERT INTO images (uid, title, access_count, image) VALUES (?, ?, ?, ?)");
         
         // プレースホルダに値をバインド
-        $stmt->bind_param("sss", $uid, $title, $imageData);
+        $accessCount = 1;
+        $stmt->bind_param("ssis", $uid, $title, $accessCount, $imageData);
         
         // クエリを実行
         if (!$stmt->execute()) {
@@ -34,6 +35,13 @@ class DatabaseHelper
 
         $result = $stmt->get_result();
         $data = $result->fetch_assoc();
+
+        if ($data) {
+            // アクセスカウントを増やす
+            $stmt = $db->prepare("UPDATE images SET access_count = access_count + 1 WHERE uid = ?");
+            $stmt->bind_param("s", $uid);
+            $stmt->execute();
+        }
 
         // 画像データを返す、見つからない場合はnullを返す
         return $data ?? null;

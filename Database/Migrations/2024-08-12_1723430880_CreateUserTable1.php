@@ -14,6 +14,7 @@ class CreateUserTable1 implements SchemaMigration
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 uid VARCHAR(255) NOT NULL,
                 title VARCHAR(255) NOT NULL,
+                access_count INT NOT NULL,
                 image LONGBLOB NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );

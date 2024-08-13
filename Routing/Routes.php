@@ -43,6 +43,7 @@ return [
         // 画像データとタイトルをJSONで返す
         return new JSONRenderer([
             'title' => $result['title'],
+            'access_count' => $result['access_count'],
             'image' => base64_encode($result['image']) // 画像をbase64でエンコード
         ]);
     },

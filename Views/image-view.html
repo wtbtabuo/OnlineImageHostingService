@@ -29,6 +29,7 @@
 </head>
 <body>
     <h1 id="title"></h1>
+    <h1 id="access"></h1>
     <img id="image" alt="Image">
     <script>
         // URLクエリパラメータからUIDを取得
@@ -46,6 +47,7 @@
 
                 // タイトルと画像を表示
                 document.getElementById('title').textContent = "Title: " + data.title;
+                document.getElementById('access').textContent = "Request Count: " + data.access_count;
                 document.getElementById('image').src = `data:image/jpeg;base64,${data.image}`;
             })
             .catch(error => {
