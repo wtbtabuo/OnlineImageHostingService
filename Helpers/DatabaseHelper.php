@@ -46,4 +46,12 @@ class DatabaseHelper
         // 画像データを返す、見つからない場合はnullを返す
         return $data ?? null;
     }
+    public static function deleteImageByUID(string $uid): bool {
+        $db = new MySQLWrapper();
+
+        $stmt = $db->prepare("DELETE FROM images WHERE uid = ?");
+        $stmt->bind_param("s", $uid);
+
+        return $stmt->execute();
+    }
 }

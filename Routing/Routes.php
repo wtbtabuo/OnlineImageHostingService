@@ -47,4 +47,19 @@ return [
             'image' => base64_encode($result['image']) // 画像をbase64でエンコード
         ]);
     },
+    'api/images/delete' => function(){
+        $uid = ValidationHelper::string($_GET['uid'] ?? null);
+
+        if (!$uid) {
+            return new JSONRenderer(['error' => 'UID is required'], 400);
+        }
+
+        // データベースから画像を削除
+        $result = DatabaseHelper::deleteImageByUID($uid);
+        if (!$result) {
+            return new JSONRenderer(['error' => 'Image not found or could not be deleted'], 404);
+        }
+
+        return new JSONRenderer(['message' => 'Image deleted successfully']);
+    }
 ];
