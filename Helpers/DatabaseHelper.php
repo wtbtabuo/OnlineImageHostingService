@@ -24,11 +24,11 @@ class DatabaseHelper
         return $stmt->insert_id;
     }
 
-    public static function getImageByUID(string $uid): ?string {
+    public static function getImageByUID(string $uid): ?array {
         $db = new MySQLWrapper();
 
         // UIDに基づいて画像データを取得するSQL文
-        $stmt = $db->prepare("SELECT image FROM images WHERE uid = ?");
+        $stmt = $db->prepare("SELECT * FROM images WHERE uid = ?");
         $stmt->bind_param("s", $uid);
         $stmt->execute();
 
@@ -36,6 +36,6 @@ class DatabaseHelper
         $data = $result->fetch_assoc();
 
         // 画像データを返す、見つからない場合はnullを返す
-        return $data['image'] ?? null;
+        return $data ?? null;
     }
 }
