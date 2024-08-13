@@ -38,8 +38,8 @@ document.getElementById('uploadButton').addEventListener('click', function() {
             // 画像のタイプ（拡張子）を取得
             const fileType = file.name.split('.').pop();
             // 2つのURLを生成
-            const viewUrl = `http://localhost:5500/Views/index.html/${fileType}/${uid}`;
-            const deleteUrl = `http://localhost:5500/Views/index.html/${fileType}/${uid}/delete`;
+            const viewUrl = `http://localhost:5500/Views/image-view.html?type=${fileType}&uid=${uid}`;
+            const deleteUrl = `http://localhost:5500/Views/index.html?type=${fileType}&uid=${uid}&action=delete`;
 
             // URLを表示するための要素を作成
             const linkContainer = document.createElement('div');

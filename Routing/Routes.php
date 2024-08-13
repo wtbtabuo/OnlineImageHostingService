@@ -26,4 +26,23 @@ return [
         return new JSONRenderer(['imageId' => $res]);
     },
 
+    'api/images'=>function(){
+        echo $_POST['uid'];
+        $uid = ValidationHelper::string($_GET['uid'] ?? null);
+        if (!$uid) {
+            return new JSONRenderer(['error' => 'UID is required'], 400);
+        }
+
+        // データベースから画像を取得
+        $imageData = DatabaseHelper::getImageByUID($uid);
+        if (!$imageData) {
+            return new JSONRenderer(['error' => 'Image not found'], 404);
+        }
+
+        // 画像データをバイナリで返す
+        header('Content-Type: image/jpeg'); // 画像のMIMEタイプを設定
+        echo $imageData;
+        return new HTTPRenderer(); // HTTPレスポンスとして画像データを送信
+    },
+
 ];
